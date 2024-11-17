@@ -12,10 +12,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -48,9 +51,9 @@ class MainActivity : ComponentActivity() {
                     Alignment.CenterHorizontally,
                     Arrangement.SpaceBetween,
                 )
-            
+
+            }
         }
-    }
 }
 @Composable
 fun anadir(modifier: Modifier = Modifier, listaCompra: MutableList<String>) {
@@ -68,25 +71,20 @@ fun anadir(modifier: Modifier = Modifier, listaCompra: MutableList<String>) {
 @Composable
 fun lista(
     modifier: Modifier = Modifier,
-    listaCompra: MutableList<String>,
+    listaCompra: List<String>,
     center: Alignment.Horizontal,
     spaceBetween: Arrangement.HorizontalOrVertical
 ){
     LazyColumn {
        //items(listaCompra.size){ index ->     Text(text =(listaCompra.get(index)) ,modifier=modifier)    }
         items(listaCompra.size) { index ->
-            ElementosLista(modifier, elemento = listaCompra.get(index))
+            Row {ElementosLista(modifier, elemento = listaCompra.get(index))}
         }
     }
 }
 
 @Composable
 fun ElementosLista(modifier: Modifier=Modifier, elemento: String){
-    Row(
-        content = {Text(elemento)},
-        modifier = modifier
-    )
-
+        Row { Text(elemento) }
 }
-
 }
