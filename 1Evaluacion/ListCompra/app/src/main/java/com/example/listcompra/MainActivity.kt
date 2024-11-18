@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -45,7 +46,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun Lista(modifier: Modifier = Modifier) {
         var valor by remember { mutableStateOf("") }
-        var listaCompra by remember { mutableStateOf(mutableListOf("Tomates", "Ajos")) }
+        var listaCompra = remember { (mutableStateListOf("Tomates", "Ajos")) }
         Row(modifier = modifier) {
             TextField(
                 value = valor,
@@ -63,7 +64,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Elementos (listaCompra:MutableList<String>,
                modifier: Modifier =Modifier){
-    var lista by remember { mutableStateOf(mutableListOf(listaCompra)) }
     LazyColumn(modifier = modifier
         .padding(vertical = 100.dp)) {
         items(listaCompra) { index ->
@@ -73,6 +73,7 @@ fun Elementos (listaCompra:MutableList<String>,
                 Checkbox(checked = marcada, onCheckedChange= {marcada=!marcada},
                     modifier = modifier)
                 IconButton(onClick = {
+                    listaCompra.remove(index)
                 }) {
                     Icon(Icons.Default.Delete, contentDescription = "Eliminar")
                 }
