@@ -40,6 +40,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
 
     @Composable
     fun Lista(modifier: Modifier = Modifier) {
@@ -57,12 +58,12 @@ class MainActivity : ComponentActivity() {
         }
         Elementos(listaCompra, modifier = Modifier)
     }
-}
+
 
 @Composable
-fun Elementos (lista:MutableList<String>,
+fun Elementos (listaCompra:MutableList<String>,
                modifier: Modifier =Modifier){
-    var listaCompra by remember { mutableStateOf(lista) }
+    var lista by remember { mutableStateOf(mutableListOf(listaCompra)) }
     LazyColumn(modifier = modifier
         .padding(vertical = 100.dp)) {
         items(listaCompra) { index ->
@@ -72,13 +73,10 @@ fun Elementos (lista:MutableList<String>,
                 Checkbox(checked = marcada, onCheckedChange= {marcada=!marcada},
                     modifier = modifier)
                 IconButton(onClick = {
-                    lista.remove(index)
-                listaCompra=lista}) {
+                }) {
                     Icon(Icons.Default.Delete, contentDescription = "Eliminar")
                 }
             }
         }
     }
 }
-
-
