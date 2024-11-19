@@ -19,6 +19,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -33,33 +34,35 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Surface {
-                Lista(
+                val valor = remember { (mutableStateOf("")) }
+                val listaCompra = remember { (mutableStateListOf("")) }
+                Lista(listaCompra,
+                    valor,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(vertical = 30.dp),
                 )
+                Elementos(listaCompra, modifier = Modifier)
             }
         }
     }
 }
 
-    @Composable
-    fun Lista(modifier: Modifier = Modifier) {
-        var valor by remember { mutableStateOf("") }
-        var listaCompra = remember { (mutableStateListOf("Tomates", "Ajos")) }
-        Row(modifier = modifier) {
-            TextField(
-                value = valor,
-                onValueChange = { valor = it })
-            IconButton(onClick = {
-                listaCompra.add(valor)
-                valor=""}) {
-                Icon(Icons.Default.ShoppingCart, contentDescription = "Añadir a la lista")
-            }
+@Composable
+fun Lista(listaCompra:MutableList<String> ,
+          valor:MutableState<String>,
+          modifier: Modifier = Modifier) {
+    Row(modifier = modifier) {
+        TextField(
+            value = valor.value,
+            onValueChange = { valor.value = it })
+        IconButton(onClick = {
+            listaCompra.add(valor.value)
+            valor.value=""}) {
+            Icon(Icons.Default.ShoppingCart, contentDescription = "Añadir a la lista")
         }
-        Elementos(listaCompra, modifier = Modifier)
     }
-
+}
 
 @Composable
 fun Elementos (listaCompra:MutableList<String>,
