@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Surface {
                 val valor = remember { (mutableStateOf("")) }
-                val listaCompra = remember { (mutableStateListOf("")) }
+                val listaCompra = remember { (mutableStateListOf<String>()) }
                 Lista(listaCompra,
                     valor,
                     modifier = Modifier
