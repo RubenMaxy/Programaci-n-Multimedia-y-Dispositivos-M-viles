@@ -184,7 +184,7 @@ private fun DessertClickerApp(
     val currentDessertIndex by rememberSaveable { mutableStateOf(0) }
 
     var currentDessertPrice by rememberSaveable { mutableStateOf(desserts[currentDessertIndex].price) }
-    
+
     var currentDessertImageId by rememberSaveable { mutableStateOf(desserts[currentDessertIndex].imageId) }
 
     Scaffold(
