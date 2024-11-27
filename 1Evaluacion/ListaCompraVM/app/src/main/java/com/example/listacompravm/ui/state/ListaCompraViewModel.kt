@@ -27,7 +27,7 @@ class ListaCompraViewModel: ViewModel(){
         _uiState.value = _uiState.value.copy(lista = _uiState.value.lista.toMutableStateList().apply { remove(item) })
     }
 
-    // Add a new product to the list if it is not already there
+    // Añade el elemento si no esta en la lista
     fun add(name: String) = if (_uiState.value.lista.find { it.name == name } == null) {
         _uiState.value = _uiState.value.copy(lista = _uiState.value.lista.toMutableStateList().apply { add(0, ProductInitial(name)) })
         true
@@ -43,7 +43,7 @@ class ListaCompraViewModel: ViewModel(){
         _uiState.value = _uiState.value.copy(lista = _uiState.value.lista.toMutableStateList().apply {
             removeAll { it.checked }
         })
-        isSomethingChecked() // Check if there is something checked
+        isSomethingChecked() // Comprueba si hay alguno checkeado
     }
 
     private fun isSomethingChecked() {
