@@ -1,7 +1,7 @@
 package com.example.trivial.ui.state
 
 import com.example.trivial.data.QuestionData
-import com.example.trivial.model.Questions
+
 
 data class TrivialUiState(
     val numberQuestions: Int=5,
