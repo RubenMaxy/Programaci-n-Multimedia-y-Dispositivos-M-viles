@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.trivial.ui.screens.EndGame
 import com.example.trivial.ui.screens.Game
 import com.example.trivial.ui.screens.Home
+import com.example.trivial.ui.state.TrivialViewModel
 
 @Composable
 fun AppNavigation() {

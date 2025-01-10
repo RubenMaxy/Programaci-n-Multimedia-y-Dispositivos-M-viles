@@ -18,4 +18,12 @@ class TrivialViewModel: ViewModel() {
         _uiState.value = _uiState.value.copy(listQuestions=(getRandomQuestions(number)))
     }
 
+    fun answer(){
+
+    }
+
+    fun getIsAnswer(): Boolean {
+        return !_uiState.value.isAnswer
+    }
+
 }
