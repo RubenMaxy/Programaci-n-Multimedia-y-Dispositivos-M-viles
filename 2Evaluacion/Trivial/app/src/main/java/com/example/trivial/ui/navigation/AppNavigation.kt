@@ -13,7 +13,7 @@ import com.example.trivial.ui.state.TrivialViewModel
 fun AppNavigation() {
     val navController= rememberNavController()
 
-    NavHost(navController = navController, startDestination = AppScreens.HOME.name){
+    NavHost(navController = navController, startDestination = AppScreens.GAME.name){
         composable (AppScreens.HOME.name) {
             Home(
                 navigateToGame = {navController.navigate(AppScreens.GAME.name)}

@@ -1,17 +1,22 @@
 package com.example.trivial.ui.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.trivial.data.QuestionData
 import com.example.trivial.ui.state.TrivialViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -19,17 +24,51 @@ import com.example.trivial.ui.state.TrivialViewModel
 fun Game(
     navigateToEndGame: () ->Unit,
     trivialViewModel: TrivialViewModel = viewModel()
-
 ) {
     val trivialState by trivialViewModel.uiState.collectAsState()
-    Scaffold (){
-        Column (){
+    Scaffold (modifier = Modifier.padding(all=20.dp)){
+        Column (modifier = Modifier){
             Text(text= trivialState.listQuestions[trivialState.actualQuestion].question,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
                     .align(Alignment.CenterHorizontally))
-            Button(onClick = {trivialViewModel.answer()},
-                enabled = trivialViewModel.getIsAnswer()) {}
 
+            Respuestas(answers= trivialViewModel.getAnswer(trivialState.actualQuestion),
+                isAnswer = { trivialViewModel.getIsAnswer() },
+                onclick = { trivialViewModel.setAnswer() })
+/*
+            Text(text= trivialViewModel.getNext(),
+                Modifier.clickable (enabled = !trivialViewModel.getIsAnswer(),
+                    onClick = { if (it.equals("Ir a la puntuación")) navigateToEndGame else trivialViewModel.getNext()}))
+
+ */
         }
     }
+}
+
+
+@Composable
+fun Respuestas(answers:List<String>,
+               isAnswer:()->Boolean,
+               onclick:()->Unit,
+               ){
+    Button (onClick = onclick,
+        enabled = isAnswer(),
+        ) {
+        Text(answers[0])
+    }
+
+    TextButton (onClick = onclick,
+        enabled = isAnswer(),
+        content={answers.get(1)}
+    )
+
+    TextButton (onClick = onclick,
+        enabled = isAnswer(),
+        content={answers.get(2)},
+        modifier = Modifier)
+
+    TextButton (onClick = onclick,
+        enabled = isAnswer(),
+        content={answers.get(3)},
+        modifier = Modifier)
 }
