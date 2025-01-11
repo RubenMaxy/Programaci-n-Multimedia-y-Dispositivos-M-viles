@@ -8,6 +8,8 @@ data class TrivialUiState(
     val actualQuestion: Int=0,
     val record:Int=0,
     val listQuestions: List<QuestionData> = emptyList(),
-    val correctPercent: Int =0,
-    val isAnswer: Boolean = false
+    val correctPercent: Double =0.0,
+    val isAnswer: Boolean = false,
+    val valorPercent: Double =0.0,
+    val isCorrect: Boolean = false
     )
