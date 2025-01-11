@@ -28,20 +28,19 @@ class TrivialViewModel: ViewModel() {
     }
 
     fun setAnswer() {
-        if(_uiState.value.actualQuestion<_uiState.value.numberQuestions){
-            _uiState.value=_uiState.value.copy(isAnswer = !_uiState.value.isAnswer)
-        } else{
-            getNext()
-        }
+        _uiState.value=_uiState.value.copy(isAnswer = !_uiState.value.isAnswer)
     }
 
-    fun getNext(): String {
-        if(_uiState.value.actualQuestion==_uiState.value.numberQuestions){
+    fun getText(): String {
+        if(_uiState.value.actualQuestion==_uiState.value.numberQuestions-1){
             return "Ir a la puntuación"
-        } else{
-            _uiState.value=_uiState.value.copy(numberQuestions = _uiState.value.actualQuestion+1)
+        } else if(_uiState.value.actualQuestion<_uiState.value.numberQuestions-1){
             return "Siguiente pregunta"
-        }
+        } else return "Ir a la puntuación"
+    }
+    fun getNext() {
+        _uiState.value=_uiState.value.copy(actualQuestion = _uiState.value.actualQuestion+1)
+        setAnswer()
     }
 
 }
