@@ -6,8 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,13 +35,17 @@ fun Game(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally))
 
-            Respuestas(answers= trivialViewModel.getAnswer(trivialState.actualQuestion),
+            Respuestas(
+                answers = trivialViewModel.getAnswer(trivialState.actualQuestion),
                 isAnswer = { trivialViewModel.getIsAnswer() },
                 onclick = { trivialViewModel.setAnswer()
-                          trivialViewModel.getIsCorrect(option = it)},
-                color = {if(trivialState.isCorrect&&trivialState.isAnswer) ButtonDefaults.buttonColors(containerColor = Color.Green)
-                        else if(trivialState.isAnswer)ButtonDefaults.buttonColors(containerColor = Color.Red)
-                        else ButtonDefaults.buttonColors()}
+                          trivialViewModel.getIsCorrect(option = it)
+                          trivialViewModel.setSelectedOption(option = it)},
+                color = {if(trivialState.isCorrect&&trivialState.isAnswer&&it==trivialState.selectedOption)
+                            Color.Green
+                        else if(trivialState.isAnswer&&!trivialState.isCorrect&&it==trivialState.selectedOption)
+                            Color.Red
+                        else Color.Unspecified}
                 )
 
             Text(text= trivialViewModel.getText(),
@@ -55,35 +57,36 @@ fun Game(
 
 
 @Composable
-fun Respuestas(answers:List<String>,
-               isAnswer:()->Boolean,
-               onclick:(option:Int)->Unit,
-               color: @Composable ()-> ButtonColors
+fun Respuestas(
+    answers:List<String>,
+    isAnswer:()->Boolean,
+    onclick:(option:Int)->Unit,
+    color: (selectedOption:Int) -> Color
                ){
     Button (onClick = { onclick(0) },
         enabled = isAnswer(),
-        colors = color(),
+        modifier = Modifier.background(color(0)),
         ) {
         Text(answers[0])
     }
 
     Button (onClick = { onclick(1) },
         enabled = isAnswer(),
-        colors = color(),
+        modifier = Modifier.background(color(1)),
         ) {
         Text(answers[1])
     }
 
     Button (onClick = { onclick(2) },
         enabled = isAnswer(),
-        colors = color(),
+        modifier = Modifier.background(color(2)),
         ){
         Text(answers[2])
     }
 
     Button (onClick = { onclick(3) },
         enabled = isAnswer(),
-        colors = color(),
+        modifier = Modifier.background(color(3)),
         ){
         Text(answers[3])
     }

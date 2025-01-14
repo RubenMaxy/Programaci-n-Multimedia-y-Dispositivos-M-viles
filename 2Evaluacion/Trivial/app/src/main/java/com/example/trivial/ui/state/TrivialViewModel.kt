@@ -40,14 +40,19 @@ class TrivialViewModel: ViewModel() {
     }
     fun getNext() {
         _uiState.value=_uiState.value.copy(actualQuestion = _uiState.value.actualQuestion+1)
+        if(_uiState.value.isCorrect){
+            _uiState.value=_uiState.value.copy(isCorrect = !_uiState.value.isCorrect)
+        }
         setAnswer()
     }
 
     fun getIsCorrect(option: Int) {
         if( _uiState.value.listQuestions[_uiState.value.actualQuestion].correctAnswerIndex==option){
-            _uiState.value=_uiState.value.copy(correctPercent = _uiState.value.correctPercent - _uiState.value.valorPercent)
-            !_uiState.value.isCorrect
+            _uiState.value=_uiState.value.copy(correctPercent = _uiState.value.correctPercent - _uiState.value.valorPercent, isCorrect = !_uiState.value.isCorrect)
         }
     }
 
+    fun setSelectedOption(option: Int) {
+        _uiState.value=_uiState.value.copy(selectedOption = option)
+    }
 }

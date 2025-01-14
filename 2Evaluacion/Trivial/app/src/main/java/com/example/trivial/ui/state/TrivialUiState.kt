@@ -11,5 +11,6 @@ data class TrivialUiState(
     val correctPercent: Double =0.0,
     val isAnswer: Boolean = false,
     val valorPercent: Double =0.0,
-    val isCorrect: Boolean = false
+    val isCorrect: Boolean = false,
+    val selectedOption: Int = -1,
     )
