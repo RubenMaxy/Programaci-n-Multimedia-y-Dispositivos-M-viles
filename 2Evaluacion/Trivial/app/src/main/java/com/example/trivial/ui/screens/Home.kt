@@ -50,7 +50,7 @@ fun Home(
             ) {
                 IconButton(
                     onClick = {
-                        trivialViewModel.setNumberQuestions(-1)
+                        trivialViewModel.setNumberQuestions(trivialState.numberQuestions-1)
                     },
                     enabled = (if (trivialViewModel.getNumberQuestions() > 5) true else false),
                     modifier = Modifier
@@ -63,7 +63,7 @@ fun Home(
                 Text(text = trivialState.numberQuestions.toString())
                 IconButton(
                     onClick = {
-                        trivialViewModel.setNumberQuestions(1)
+                        trivialViewModel.setNumberQuestions(trivialState.numberQuestions+1)
                     },
                     enabled = (if (trivialViewModel.getNumberQuestions() <= 20) true else false),
                     modifier = Modifier

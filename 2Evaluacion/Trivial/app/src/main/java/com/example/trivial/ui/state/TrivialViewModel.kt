@@ -14,8 +14,8 @@ class TrivialViewModel: ViewModel() {
         _uiState.value = TrivialUiState()
     }
 
-    fun getQuestions(number: Int =_uiState.value.numberQuestions){
-        _uiState.value = _uiState.value.copy(listQuestions=(getRandomQuestions(number)), valorPercent = (100/-uiState.value.numberQuestions).toDouble())
+    fun getQuestions(){
+        _uiState.value = _uiState.value.copy(listQuestions=(getRandomQuestions(_uiState.value.numberQuestions)), valorPercent = (100/_uiState.value.numberQuestions).toDouble())
     }
 
     fun getAnswer(pregunta: Int): List<String> {
@@ -47,7 +47,7 @@ class TrivialViewModel: ViewModel() {
 
     fun getIsCorrect(option: Int) {
         if( _uiState.value.listQuestions[_uiState.value.actualQuestion].correctAnswerIndex==option){
-            _uiState.value=_uiState.value.copy(correctPercent = _uiState.value.correctPercent - _uiState.value.valorPercent, isCorrect = !_uiState.value.isCorrect)
+            _uiState.value=_uiState.value.copy(correctPercent = _uiState.value.correctPercent + _uiState.value.valorPercent, isCorrect = !_uiState.value.isCorrect)
         }
     }
 
@@ -59,7 +59,7 @@ class TrivialViewModel: ViewModel() {
         return _uiState.value.numberQuestions
     }
     fun setNumberQuestions(number: Int) {
-        _uiState.value=_uiState.value.copy(numberQuestions = _uiState.value.numberQuestions+number)
+        _uiState.value=_uiState.value.copy(numberQuestions = number)
     }
 
 
