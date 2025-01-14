@@ -74,14 +74,16 @@ fun Home(
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            Button(
-                onClick = {
-                    trivialViewModel.getQuestions()
-                    navigateToGame()
-                          },
-                modifier = Modifier
-            ) {
-                Text(text = "Comenzar")
+            Column(modifier = Modifier) {
+                Button(
+                    onClick = {
+                        trivialViewModel.getQuestions()
+                        navigateToGame()
+                    },
+                    modifier = Modifier
+                ) {
+                    Text(text = "Comenzar")
+                }
             }
         }
     }
