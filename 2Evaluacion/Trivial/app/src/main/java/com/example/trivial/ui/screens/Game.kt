@@ -27,7 +27,7 @@ fun Game(
     val trivialState by trivialViewModel.uiState.collectAsState()
     Scaffold (modifier = Modifier.padding(all=20.dp)){
         Column (modifier = Modifier){
-            Text(text= "Puntuación: ${trivialState.correctPercent}%",
+            Text(text= "Pregunta  ${trivialState.actualQuestion+1} de ${trivialState.numberQuestions}",
                 modifier = Modifier
                     .align(Alignment.End))
 

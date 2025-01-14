@@ -12,7 +12,6 @@ class TrivialViewModel: ViewModel() {
 
     init {
         _uiState.value = TrivialUiState()
-        getQuestions()
     }
 
     fun getQuestions(number: Int =_uiState.value.numberQuestions){
@@ -55,4 +54,13 @@ class TrivialViewModel: ViewModel() {
     fun setSelectedOption(option: Int) {
         _uiState.value=_uiState.value.copy(selectedOption = option)
     }
+
+    fun getNumberQuestions(): Int {
+        return _uiState.value.numberQuestions
+    }
+    fun setNumberQuestions(number: Int) {
+        _uiState.value=_uiState.value.copy(numberQuestions = _uiState.value.numberQuestions+number)
+    }
+
+
 }

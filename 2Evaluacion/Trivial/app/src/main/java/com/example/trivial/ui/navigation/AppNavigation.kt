@@ -12,7 +12,7 @@ import com.example.trivial.ui.screens.Home
 fun AppNavigation() {
     val navController= rememberNavController()
 
-    NavHost(navController = navController, startDestination = AppScreens.GAME.name){
+    NavHost(navController = navController, startDestination = AppScreens.HOME.name){
         composable (AppScreens.HOME.name) {
             Home(
                 navigateToGame = {navController.navigate(AppScreens.GAME.name)}
