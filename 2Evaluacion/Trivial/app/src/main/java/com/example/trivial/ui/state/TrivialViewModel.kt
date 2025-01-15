@@ -1,5 +1,6 @@
 package com.example.trivial.ui.state
 
+import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import com.example.trivial.model.getRandomQuestions
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,7 @@ class TrivialViewModel: ViewModel() {
     }
 
     fun getQuestions(){
-        _uiState.value = _uiState.value.copy(listQuestions=(getRandomQuestions(_uiState.value.numberQuestions)), valorPercent = (100/_uiState.value.numberQuestions).toDouble())
+        _uiState.value = _uiState.value.copy(listQuestions=(getRandomQuestions(_uiState.value.numberQuestions)).toMutableStateList(), valorPercent = (100/_uiState.value.numberQuestions).toDouble())
     }
 
     fun getAnswer(pregunta: Int): List<String> {
