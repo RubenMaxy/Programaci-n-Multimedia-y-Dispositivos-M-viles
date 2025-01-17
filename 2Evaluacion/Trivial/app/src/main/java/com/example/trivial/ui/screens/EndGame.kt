@@ -26,9 +26,11 @@ import com.example.trivial.ui.state.TrivialViewModel
 @Composable
 fun EndGame(
     navigateToHome:()->Unit,
+    points: Double,
     trivialViewModel: TrivialViewModel = viewModel()
 ) {
     val trivialState by trivialViewModel.uiState.collectAsState()
+    trivialViewModel.setPercent(points)
     Scaffold ( topBar={
         TopAppBar (title = { Text("Trivial VideoMax") },
         colors= TopAppBarDefaults.topAppBarColors(

@@ -64,5 +64,8 @@ class TrivialViewModel: ViewModel() {
         _uiState.value=_uiState.value.copy(numberQuestions = number)
     }
 
+    fun setPercent(percent: Double) {
+        _uiState.value=_uiState.value.copy(correctPercent = percent)
 
+    }
 }

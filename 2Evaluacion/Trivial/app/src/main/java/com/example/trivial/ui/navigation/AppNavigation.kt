@@ -1,12 +1,16 @@
 package com.example.trivial.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.trivial.ui.screens.EndGame
 import com.example.trivial.ui.screens.Game
 import com.example.trivial.ui.screens.Home
+import com.example.trivial.ui.state.TrivialViewModel
 
 @Composable
 fun AppNavigation() {
@@ -14,28 +18,37 @@ fun AppNavigation() {
 
     NavHost(navController = navController, startDestination = AppScreens.HOME.name){
         composable (AppScreens.HOME.name) {
+            val viewModel: TrivialViewModel = viewModel()
             Home(
-                navigateToGame = {navController.navigate(AppScreens.GAME.name)}
+                navigateToGame = {navController.navigate("${AppScreens.GAME.name}/${viewModel.uiState.value.numberQuestions}")}
             )
         }
 
-        composable (AppScreens.GAME.name) {
+        composable ( route = "${AppScreens.GAME.name}/{numQuestions:Int}",
+            arguments = listOf(navArgument("numQuestions") { type = NavType.IntType }) ) {
+            backStackEntry ->
+            val numQuestions = backStackEntry.arguments?.getInt("numQuestions") ?: 5
+            val viewModel: TrivialViewModel = viewModel()
             Game (
                 navigateToEndGame = {
-                    navController.navigate(AppScreens.ENDGAME.name){
+                    navController.navigate("${AppScreens.ENDGAME.name}/${viewModel.uiState.value.correctPercent}"){
                         popUpTo(AppScreens.GAME.name) { inclusive = true }
-                    }
-                }
+                    }},
+                numQuestions=numQuestions
             )
         }
 
-        composable (AppScreens.ENDGAME.name) {
-            EndGame (
+        composable ( route = "${AppScreens.ENDGAME.name}/{points:Double}",
+            arguments = listOf(navArgument("points") { type = NavType.FloatType})) {
+                backStackEntry ->
+            val points = backStackEntry.arguments?.getFloat("points")?.toDouble() ?: 0.0
+            EndGame(
                 navigateToHome = {
-                    navController.navigate(AppScreens.HOME.name){
+                    navController.navigate(AppScreens.HOME.name) {
                         popUpTo(AppScreens.ENDGAME.name) { inclusive = true }
                     }
-                }
+                },
+                points = points
             )
         }
 
