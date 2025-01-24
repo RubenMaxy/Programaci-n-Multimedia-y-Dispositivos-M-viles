@@ -25,7 +25,7 @@ fun Game(
     trivialViewModel: TrivialViewModel = viewModel()
 ) {
     val trivialState by trivialViewModel.uiState.collectAsState()
-    trivialViewModel.setNumberQuestions(8)
+    trivialViewModel.setNumberQuestions(4)
     trivialViewModel.getQuestions()
     Scaffold (modifier = Modifier.padding(all=20.dp)){
         Column (modifier = Modifier){
