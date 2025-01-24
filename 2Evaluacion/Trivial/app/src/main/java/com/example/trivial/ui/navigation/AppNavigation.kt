@@ -1,9 +1,11 @@
 package com.example.trivial.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavArgumentBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.trivial.ui.screens.EndGame
 import com.example.trivial.ui.screens.Game
 import com.example.trivial.ui.screens.Home
@@ -21,7 +23,7 @@ fun AppNavigation() {
             )
         }
 
-        composable ( AppScreens.GAME.name) {
+        composable (AppScreens.GAME.name){
             Game (
                 navigateToEndGame = {
                     navController.navigate(AppScreens.ENDGAME.name){
