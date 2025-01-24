@@ -33,7 +33,7 @@ import com.example.trivial.ui.state.TrivialViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Home(
-    navigateToGame: (Int) -> Unit,
+    navigateToGame: () -> Unit,
     trivialViewModel: TrivialViewModel = viewModel()
 ) {
     val trivialState by trivialViewModel.uiState.collectAsState()
@@ -78,7 +78,7 @@ fun Home(
                 Button(
                     onClick = {
                         trivialViewModel.getQuestions()
-                        navigateToGame(trivialState.numberQuestions)
+                        navigateToGame()
                     },
                     modifier = Modifier
                 ) {
@@ -88,3 +88,4 @@ fun Home(
         }
     }
 }
+

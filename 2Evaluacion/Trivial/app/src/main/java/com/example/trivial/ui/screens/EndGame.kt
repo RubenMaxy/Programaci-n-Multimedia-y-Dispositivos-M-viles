@@ -20,8 +20,7 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EndGame(
-    navigateToHome:()->Unit,
-    points: Double,
+    navigateToHome:()->Unit
 ) {
 
     Scaffold ( topBar={
@@ -36,7 +35,7 @@ fun EndGame(
             .padding(top = 110.dp)){
             Text(text = "Has terminado el juego")
             Spacer(modifier = Modifier.padding(2.dp))
-            Text(text = "Su puntuacion es: $points%")
+            Text(text = "Su puntuacion es: points%")
             Spacer(modifier = Modifier.padding(5.dp))
             Button(
                 onClick = {

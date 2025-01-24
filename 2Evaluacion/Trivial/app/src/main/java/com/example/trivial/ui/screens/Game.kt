@@ -22,11 +22,10 @@ import com.example.trivial.ui.state.TrivialViewModel
 @Composable
 fun Game(
     navigateToEndGame: () ->Unit,
-    numQuestions: Int,
     trivialViewModel: TrivialViewModel = viewModel()
 ) {
     val trivialState by trivialViewModel.uiState.collectAsState()
-    trivialViewModel.setNumberQuestions(numQuestions)
+    trivialViewModel.setNumberQuestions(2)
     trivialViewModel.getQuestions()
     Scaffold (modifier = Modifier.padding(all=20.dp)){
         Column (modifier = Modifier){
