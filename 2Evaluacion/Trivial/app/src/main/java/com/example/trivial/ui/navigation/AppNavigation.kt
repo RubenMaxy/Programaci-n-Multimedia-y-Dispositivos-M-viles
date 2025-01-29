@@ -1,7 +1,9 @@
 package com.example.trivial.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavArgument
 import androidx.navigation.NavArgumentBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -33,7 +35,9 @@ fun AppNavigation() {
             )
         }
 
-        composable (AppScreens.ENDGAME.name){
+        composable (AppScreens.ENDGAME.name + "/{param}", arguments = listOf(
+            navArgument("param") { NavType.StringType}
+        )){
             EndGame(
                 navigateToHome = {
                     navController.navigate(AppScreens.HOME.name) {
