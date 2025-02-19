@@ -24,8 +24,7 @@ fun Game(
     trivialViewModel: TrivialViewModel = viewModel()
 ) {
     val trivialState by trivialViewModel.uiState.collectAsState()
-    trivialViewModel.setNumberQuestions(4)
-    trivialViewModel.getQuestions()
+
     Scaffold (modifier = Modifier.padding(all=20.dp)){
         Column (modifier = Modifier){
             Text(text= "Pregunta  ${trivialState.actualQuestion+1} de ${trivialState.numberQuestions}",
@@ -51,13 +50,11 @@ fun Game(
 
             Text(text= trivialViewModel.getText(),
                 Modifier.clickable (enabled = !trivialViewModel.getIsAnswer(),
-                    onClick = { if (it.equals("Ir a la puntuación")) //navigateToEndGame()
+                    onClick = { if (trivialViewModel.getText().equals("Ir a la puntuación")) trivialViewModel.navigateToEndGame()
                     else trivialViewModel.getNext()}))
         }
     }
 }
-
-
 
 
 @Composable

@@ -13,11 +13,18 @@ class TrivialViewModel: ViewModel() {
 
     init {
         _uiState.value = TrivialUiState()
-        //getQuestions() //Solo es necesario cuando quiero iniciar en la pantalla GAME
     }
 
     fun getQuestions(){
-        _uiState.value = _uiState.value.copy(listQuestions=(getRandomQuestions(_uiState.value.numberQuestions)).toMutableStateList(), valorPercent = (100/_uiState.value.numberQuestions).toDouble())
+        _uiState.value = _uiState.value.copy(listQuestions=(getRandomQuestions(_uiState.value.numberQuestions)).toMutableStateList(),
+            valorPercent = (100/_uiState.value.numberQuestions).toDouble(),
+            screen = Pantallas.GAME,
+            actualQuestion=0,
+            correctPercent=0.0,
+            isAnswer= false,
+            isCorrect=false,
+            selectedOption=-1
+            )
     }
 
     fun getAnswer(pregunta: Int): List<String> {
@@ -40,7 +47,9 @@ class TrivialViewModel: ViewModel() {
         } else return "Ir a la puntuación"
     }
     fun getNext() {
-        _uiState.value=_uiState.value.copy(actualQuestion = _uiState.value.actualQuestion+1)
+        if(_uiState.value.actualQuestion<_uiState.value.numberQuestions-1) {
+            _uiState.value = _uiState.value.copy(actualQuestion = _uiState.value.actualQuestion + 1)
+        }
         if(_uiState.value.isCorrect){
             _uiState.value=_uiState.value.copy(isCorrect = !_uiState.value.isCorrect)
         }
@@ -64,8 +73,11 @@ class TrivialViewModel: ViewModel() {
         _uiState.value=_uiState.value.copy(numberQuestions = number)
     }
 
-    fun setPercent(percent: Double) {
-        _uiState.value=_uiState.value.copy(correctPercent = percent)
+    fun navigateToHome (){
+        _uiState.value=_uiState.value.copy(screen = Pantallas.HOME)
+    }
 
+    fun navigateToEndGame(){
+        _uiState.value=_uiState.value.copy(screen = Pantallas.ENDGAME)
     }
 }

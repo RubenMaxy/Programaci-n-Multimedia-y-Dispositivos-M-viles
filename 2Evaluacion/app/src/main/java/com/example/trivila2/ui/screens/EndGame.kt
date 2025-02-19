@@ -23,7 +23,6 @@ import com.example.trivila2.ui.state.TrivialViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EndGame(
-
     trivialViewModel: TrivialViewModel = viewModel()
 ) {
     val trivialState by trivialViewModel.uiState.collectAsState()
@@ -32,8 +31,7 @@ fun EndGame(
             colors= TopAppBarDefaults.topAppBarColors(
                 titleContentColor = Color.Green
             ))
-    },
-        modifier = Modifier
+    }
     ) {
         Column (modifier = Modifier
             .padding(top = 110.dp)){
@@ -43,7 +41,7 @@ fun EndGame(
             Spacer(modifier = Modifier.padding(5.dp))
             Button(
                 onClick = {
-                    //navigateToHome()
+                    trivialViewModel.navigateToHome()
                 },
                 modifier = Modifier
             ) {

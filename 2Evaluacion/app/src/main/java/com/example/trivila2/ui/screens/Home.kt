@@ -67,7 +67,7 @@ fun Home(
                     onClick = {
                         trivialViewModel.setNumberQuestions(trivialState.numberQuestions+1)
                     },
-                    enabled = (if (trivialViewModel.getNumberQuestions() <= 20) true else false),
+                    enabled = (if (trivialViewModel.getNumberQuestions() < 20) true else false),
                     modifier = Modifier
                 ) {
                     Icon(imageVector = Icons.Filled.KeyboardArrowUp, contentDescription = "Sumar 1")
