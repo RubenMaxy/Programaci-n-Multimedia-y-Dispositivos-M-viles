@@ -13,7 +13,7 @@ class TrivialViewModel: ViewModel() {
 
     init {
         _uiState.value = TrivialUiState()
-        getQuestions() //Solo es necesario cuando quiero iniciar en la pantalla GAME
+        //getQuestions() //Solo es necesario cuando quiero iniciar en la pantalla GAME
     }
 
     fun getQuestions(){
