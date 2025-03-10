@@ -47,9 +47,7 @@ fun Home(
         modifier = Modifier.fillMaxSize()
     ) {
         Column(modifier = Modifier.fillMaxSize()
-            .padding(top = 100.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally) {
+            .padding(top = 100.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
