@@ -41,8 +41,10 @@ fun Home(
     Scaffold ( topBar={
         TopAppBar (title = { Text("Trivial VideoMax") },
         colors= TopAppBarDefaults.topAppBarColors(
-            titleContentColor = Color.Green
-        ))
+            titleContentColor = Color.Magenta
+        ),
+            modifier = Modifier.fillMaxWidth()
+                )
     },
         modifier = Modifier.fillMaxSize()
     ) {

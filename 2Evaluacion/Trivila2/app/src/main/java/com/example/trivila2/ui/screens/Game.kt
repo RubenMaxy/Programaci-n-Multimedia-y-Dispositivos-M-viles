@@ -3,7 +3,12 @@ package com.example.trivila2.ui.screens
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
@@ -26,34 +31,62 @@ fun Game(
     val trivialState by trivialViewModel.uiState.collectAsState()
 
     Scaffold (modifier = Modifier.padding(all=20.dp)){
-        Column (modifier = Modifier){
-            Text(text= "Pregunta  ${trivialState.actualQuestion+1} de ${trivialState.numberQuestions}",
+        Column (
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp), // Ajusta el padding de toda la columna si es necesario
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top // Cambia el orden vertical a Top
+        ){
+            Row( // Agregamos una fila para facilitar la alineación
                 modifier = Modifier
-                    .align(Alignment.End))
+                    .fillMaxWidth()
+                    .padding(top = 16.dp), // Espaciado superior si lo prefieres
+                horizontalArrangement = Arrangement.End // Alineación a la derecha
+            ) {
+                Text(
+                    text = "Pregunta  ${trivialState.actualQuestion+1} de ${trivialState.numberQuestions}"
+                )
+            }
 
-            Text(text= trivialState.listQuestions[trivialState.actualQuestion].question,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally))
+            Spacer(modifier = Modifier.padding(120.dp))
+            Text(
+                text = trivialState.listQuestions[trivialState.actualQuestion].question,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
 
             Respuestas(
                 answers = trivialViewModel.getAnswer(trivialState.actualQuestion),
                 isAnswer = { trivialViewModel.getIsAnswer() },
-                onclick = { trivialViewModel.setAnswer()
+                onclick = {
+                    trivialViewModel.setAnswer()
                     trivialViewModel.getIsCorrect(option = it)
-                    trivialViewModel.setSelectedOption(option = it)},
-                color = {if(trivialState.isCorrect&&trivialState.isAnswer&&it==trivialState.selectedOption)
-                    Color.Green
-                else if(trivialState.isAnswer&&!trivialState.isCorrect&&it==trivialState.selectedOption)
-                    Color.Red
-                else Color.Unspecified}
+                    trivialViewModel.setSelectedOption(option = it)
+                },
+                color = {
+                    if(trivialState.isCorrect && trivialState.isAnswer && it == trivialState.selectedOption)
+                        Color.Green
+                    else if(trivialState.isAnswer && !trivialState.isCorrect && it == trivialState.selectedOption)
+                        Color.Red
+                    else Color.Unspecified
+                }
             )
 
-            Text(text= trivialViewModel.getText(),
-                Modifier.clickable (enabled = !trivialViewModel.getIsAnswer(),
-                    onClick = { if (trivialViewModel.getText().equals("Ir a la puntuación")) trivialViewModel.navigateToEndGame()
-                    else trivialViewModel.getNext()}))
+            Text(
+                text = trivialViewModel.getText(),
+                Modifier.clickable(
+                    enabled = !trivialViewModel.getIsAnswer(),
+                    onClick = {
+                        if (trivialViewModel.getText() == "Ir a la puntuación")
+                            trivialViewModel.navigateToEndGame()
+                        else
+                            trivialViewModel.getNext()
+                    }
+                )
+            )
         }
     }
+
 }
 
 
