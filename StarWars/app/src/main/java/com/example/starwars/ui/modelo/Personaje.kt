@@ -2,9 +2,13 @@ package com.example.starwars.ui.modelo
 
 import com.google.gson.annotations.SerializedName
 
+
 data class Personaje(
-    @SerializedName("name") val nombre: String, // Nombre del personaje, si las val se llaman igual no haria falta el SerializedName
-    val imagenes: List<String>,  // Lista de URLs de imágenes
-    val films: List<String>  // Lista de URLs de películas donde aparece el personaje
+    @SerializedName("name") val nombre: String, // Nombre del personaje, si se llama igual no haria falta el SerializedName
+    @SerializedName("height") val altura: String, // Altura en cm
+    @SerializedName("hair_color") val colorPelo: String,    // Color de pelo
+    @SerializedName("birth_year") val nacimiento: String,   // Año de nacimiento
+    @SerializedName("films") val peliculas: List<String> // Lista de películas en las que aparece
 )
+
 
