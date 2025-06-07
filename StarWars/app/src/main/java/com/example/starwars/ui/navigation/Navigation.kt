@@ -9,15 +9,16 @@ import com.example.starwars.ui.screens.ScreenPrincipal
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.starwars.ui.room.dao.FavoritosDao
 import com.example.starwars.ui.screens.DetallesScreen
 
 
 @Composable
-fun AppNavigation(navController: NavHostController) {
+fun AppNavigation(navController: NavHostController, favoritosDao: FavoritosDao) {
     NavHost(navController = navController, startDestination = Screens.Principal.route) {
         composable(Screens.Principal.route) { ScreenPrincipal(navController) }
-        composable(Screens.ListaCompleta.route) { ListaCompletaScreen(navController) }
-        composable(Screens.Favoritos.route) { FavoritosScreen() }
+        composable(Screens.ListaCompleta.route) { ListaCompletaScreen(navController, favoritosDao) }
+        composable(Screens.Favoritos.route) { FavoritosScreen(favoritosDao) }
         composable(
             Screens.Detalles.route + "/{nombre}",
             arguments = listOf(navArgument("nombre") { type = NavType.StringType })

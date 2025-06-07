@@ -13,9 +13,10 @@ import androidx.navigation.NavController
 import com.example.starwars.ui.modelo.Personaje
 import com.example.starwars.ui.navigation.Screens
 import com.example.starwars.ui.network.api.RetrofitClient
+import com.example.starwars.ui.room.dao.FavoritosDao
 
 @Composable
-fun ListaCompletaScreen(navController: NavController) {
+fun ListaCompletaScreen(navController: NavController, favoritosDao: FavoritosDao) {
     val personajes = remember { mutableStateOf<List<Personaje>>(emptyList()) }
 
     LaunchedEffect(Unit) {
@@ -30,10 +31,10 @@ fun ListaCompletaScreen(navController: NavController) {
 
     LazyColumn {
         if (personajes.value.isEmpty()) {
-            item { Text(text = "No hay personajes disponibles", fontSize = 18.sp) } // ✅ Verifica si la lista está vacía
+            item { Text(text = "No hay personajes disponibles", fontSize = 18.sp) } // ✅ Manejar lista vacía
         } else {
             items(personajes.value) { personaje ->
-                PersonajeItem(personaje) {
+                PersonajeItem(personaje, favoritosDao) {
                     navController.navigate("${Screens.Detalles.route}/${personaje.nombre}")
                 }
             }

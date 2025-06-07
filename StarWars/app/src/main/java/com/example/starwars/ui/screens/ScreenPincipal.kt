@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.starwars.ui.navigation.Screens
 import kotlin.system.exitProcess
 
 @Composable
@@ -25,14 +26,14 @@ fun ScreenPrincipal(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Botón para ver lista completa
-        Button(onClick = { navController.navigate("listaCompleta") }) {
+        Button(onClick = { navController.navigate(Screens.ListaCompleta.route) }) {
             Text(text = "Ver Lista Completa")
         }
 
         Spacer(modifier = Modifier.height(16.dp)) // Espaciado entre botones
 
         // Botón para ver favoritos
-        Button(onClick = { navController.navigate("favoritos") }) {
+        Button(onClick = { navController.navigate(Screens.Favoritos.route) }) {
             Text(text = "Ver Favoritos")
         }
 
