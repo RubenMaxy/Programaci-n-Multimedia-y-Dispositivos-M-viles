@@ -1,6 +1,7 @@
 package com.example.starwars.ui.modelo
 
 
+import com.example.starwars.ui.room.entidades.Favorito
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -13,4 +14,13 @@ data class Personaje(
     @SerializedName("films") val peliculas: List<String> // Lista de películas en las que aparece
 ) : Serializable
 
+fun Personaje.toFavorito(): Favorito {
+    return Favorito(
+        nombre = this.nombre,
+        altura = this.altura,
+        colorPelo = this.colorPelo,
+        nacimiento = this.nacimiento,
+        peliculas = this.peliculas // ✅ Mantiene la lista de películas correctamente
+    )
+}
 

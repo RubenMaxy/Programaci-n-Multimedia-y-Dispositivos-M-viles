@@ -22,7 +22,6 @@ import com.example.starwars.ui.navigation.Screens
 import com.example.starwars.ui.room.dao.FavoritosDao
 import com.example.starwars.ui.room.entidades.Favorito
 import com.example.starwars.ui.room.entidades.toPersonaje
-import kotlin.text.set
 
 
 @Composable
@@ -57,9 +56,7 @@ fun FavoritosScreen(navController: NavController, favoritosDao: FavoritosDao) {
             items(favoritos.value.size) { index -> // Pasamos el número de elementos
                 val favorito = favoritos.value[index].toPersonaje() // Convertimos Favorito en Personaje
                 PersonajeItem(
-                    personaje = favorito,
-                    favoritosDao = favoritosDao,
-                    esFavoritoInicial = true
+                    personaje = favorito
                 ) {
                     navController.currentBackStackEntry?.savedStateHandle?.set("personaje", favorito) // Guardamos el objeto
                     navController.navigate(Screens.Detalles.route) // Navegamos pasando el personaje completo

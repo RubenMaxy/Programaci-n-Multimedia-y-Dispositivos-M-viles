@@ -22,7 +22,7 @@ fun AppNavigation(navController: NavHostController, favoritosDao: FavoritosDao) 
         composable(Screens.Detalles.route) { backStackEntry ->
             val personaje = navController.previousBackStackEntry?.savedStateHandle?.get<Personaje>("personaje")
             personaje?.let {
-                DetallesScreen(it) // Si el personaje existe, lo pasamos a la pantalla de detalles
+                DetallesScreen(navController, favoritosDao) // Si el personaje existe, lo pasamos a la pantalla de detalles
             } ?: Log.e("DetallesScreen", "Error: Personaje no encontrado") // Agrega un Log para verificar si el objeto llega
         }
 

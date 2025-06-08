@@ -1,60 +1,46 @@
 package com.example.starwars.ui.screens
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.starwars.ui.modelo.Personaje
-import com.example.starwars.ui.room.dao.FavoritosDao
-import com.example.starwars.ui.room.entidades.Favorito
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.starwars.ui.viewModel.PersonajeViewModel
 
 @Composable
-fun PersonajeItem(personaje: Personaje, favoritosDao: FavoritosDao, esFavoritoInicial: Boolean, onClick: () -> Unit) {
-    var esFavorito by remember { mutableStateOf(esFavoritoInicial) } // Estado inicial
+fun PersonajeItem(personaje: Personaje, viewModel: PersonajeViewModel= viewModel(), onItemClick: () -> Unit) {
+    val favoritosState by viewModel.favoritos.collectAsState()
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-            .padding(8.dp)
+    val esFavorito = favoritosState.any { it.nombre == personaje.nombre }
+
+    Card(
+        modifier = Modifier.fillMaxWidth().padding(8.dp),
     ) {
-        Column {
-            Text(text = personaje.nombre, fontSize = 18.sp, fontWeight = FontWeight.Bold)
-            Text(text = "Altura: ${personaje.altura}", fontSize = 14.sp, color = Color.Gray)
-            Text(text = "Color de pelo: ${personaje.colorPelo}", fontSize = 14.sp, color = Color.Gray)
-            Text(text = "Nacimiento: ${personaje.nacimiento}", fontSize = 14.sp, color = Color.Gray)
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = personaje.nombre, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Text(text = "Altura: ${personaje.altura}", fontSize = 16.sp)
+            Text(text = "Color de pelo: ${personaje.colorPelo}", fontSize = 16.sp)
+            Text(text = "Año de nacimiento: ${personaje.nacimiento}", fontSize = 16.sp)
 
-            IconButton(onClick = {
-                esFavorito = !esFavorito
-                CoroutineScope(Dispatchers.IO).launch {
-                    if (esFavorito) {
-                        favoritosDao.agregarFavorito(Favorito(personaje.nombre, personaje.altura, personaje.colorPelo, personaje.nacimiento, personaje.peliculas))
-                    } else {
-                        favoritosDao.eliminarFavorito(Favorito(personaje.nombre, personaje.altura, personaje.colorPelo, personaje.nacimiento, personaje.peliculas))
-                    }
-                }
-            }) {
-                Icon(imageVector = if (esFavorito) Icons.Default.Favorite else Icons.Default.FavoriteBorder, contentDescription = "Favorito")
+            IconButton(onClick = { viewModel.alternarFavorito(personaje) }) {
+                Icon(
+                    imageVector = if (esFavorito) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                    contentDescription = "Favorito"
+                )
             }
         }
     }
