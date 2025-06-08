@@ -12,12 +12,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val db = AppDatabase.getDatabase(this) // Inicializa la BD
-        val favoritosDao = db.favoritosDao() // Crea el DAO
+        val db = AppDatabase.getDatabase(this) // Inicializa la BD correctamente
+        val favoritosDao = db.favoritosDao() // Obtiene el DAO correctamente
 
         setContent {
             val navController = rememberNavController()
-            AppNavigation(navController, favoritosDao) // Pasamos favoritosDao correctamente
+            AppNavigation(navController, favoritosDao) // Pasa `favoritosDao` correctamente
         }
     }
 }

@@ -12,3 +12,4 @@ class PersonajeViewModelFactory(private val favoritosDao: FavoritosDao) : ViewMo
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
+

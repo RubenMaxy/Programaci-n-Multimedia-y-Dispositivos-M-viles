@@ -29,16 +29,16 @@ import com.example.starwars.ui.viewModel.PersonajeViewModelFactory
 fun DetallesScreen(navController: NavController, favoritosDao: FavoritosDao) {
     val viewModelFactory = remember { PersonajeViewModelFactory(favoritosDao) }
     val viewModel: PersonajeViewModel = viewModel(factory = viewModelFactory)
-    val peliculasState = viewModel.peliculas.collectAsState() // Agrega este estado
 
     val personajeState = viewModel.personajeSeleccionado.collectAsState()
+    val peliculasState = viewModel.peliculas.collectAsState()
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        personajeState?.let {
-            Text(text = it.value?.nombre ?: "", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-            Text(text = "Altura: ${it.value?.altura}", fontSize = 18.sp)
-            Text(text = "Color de pelo: ${it.value?.colorPelo}", fontSize = 18.sp)
-            Text(text = "Nacimiento: ${it.value?.nacimiento}", fontSize = 18.sp)
+        personajeState.value?.let { personaje -> // ✅ Accedemos correctamente al estado
+            Text(text = personaje.nombre, fontSize = 24.sp, fontWeight = FontWeight.Bold)
+            Text(text = "Altura: ${personaje.altura}", fontSize = 18.sp)
+            Text(text = "Color de pelo: ${personaje.colorPelo}", fontSize = 18.sp)
+            Text(text = "Nacimiento: ${personaje.nacimiento}", fontSize = 18.sp)
         } ?: Text(text = "Cargando personaje...", fontSize = 18.sp, color = Color.Gray)
 
         Spacer(modifier = Modifier.height(16.dp))

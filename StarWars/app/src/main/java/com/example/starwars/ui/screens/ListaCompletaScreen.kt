@@ -32,8 +32,8 @@ fun ListaCompletaScreen(navController: NavController, favoritosDao: FavoritosDao
                 personaje = personaje,
                 viewModel = viewModel // Pasamos el ViewModel para manejar favoritos
             ) {
-                viewModel.seleccionarPersonaje(personaje) // Guarda el personaje en el ViewModel
-                navController.navigate(Screens.Detalles.route) // Navega sin pasar datos extra
+                navController.currentBackStackEntry?.savedStateHandle?.set("personaje", personaje) // ✅ Guardamos el personaje
+                navController.navigate(Screens.Detalles.route) // Navegamos sin pasar el objeto
             }
         }
     }
