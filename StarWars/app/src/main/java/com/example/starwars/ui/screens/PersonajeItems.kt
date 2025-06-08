@@ -29,8 +29,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun PersonajeItem(personaje: Personaje, favoritosDao: FavoritosDao, onClick: () -> Unit) {
-    var esFavorito by remember { mutableStateOf(false) }
+fun PersonajeItem(personaje: Personaje, favoritosDao: FavoritosDao, esFavoritoInicial: Boolean, onClick: () -> Unit) {
+    var esFavorito by remember { mutableStateOf(esFavoritoInicial) } // Estado inicial
 
     Row(
         modifier = Modifier
@@ -48,9 +48,9 @@ fun PersonajeItem(personaje: Personaje, favoritosDao: FavoritosDao, onClick: () 
                 esFavorito = !esFavorito
                 CoroutineScope(Dispatchers.IO).launch {
                     if (esFavorito) {
-                        favoritosDao.agregarFavorito(Favorito(personaje.nombre, personaje.altura, personaje.colorPelo, personaje.nacimiento))
+                        favoritosDao.agregarFavorito(Favorito(personaje.nombre, personaje.altura, personaje.colorPelo, personaje.nacimiento, personaje.peliculas))
                     } else {
-                        favoritosDao.eliminarFavorito(Favorito(personaje.nombre, personaje.altura, personaje.colorPelo, personaje.nacimiento))
+                        favoritosDao.eliminarFavorito(Favorito(personaje.nombre, personaje.altura, personaje.colorPelo, personaje.nacimiento, personaje.peliculas))
                     }
                 }
             }) {

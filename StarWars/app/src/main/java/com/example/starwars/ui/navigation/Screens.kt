@@ -4,6 +4,6 @@ enum class Screens(val route: String) {
     Principal("principal"),
     ListaCompleta("listaCompleta"),
     Favoritos("favoritos"),
-    Detalles("detalles/{nombre}")
+    Detalles("detalles/{personaje}")
 }
 

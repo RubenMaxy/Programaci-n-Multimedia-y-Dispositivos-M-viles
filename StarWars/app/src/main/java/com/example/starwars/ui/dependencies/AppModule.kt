@@ -2,13 +2,13 @@ package com.example.starwars.ui.dependencies
 
 import android.content.Context
 import androidx.room.Room
-import com.example.starwars.ui.room.baseDatos.FavoritosDB
+import com.example.starwars.ui.room.baseDatos.AppDatabase
 
 object AppModule {
-    fun provideDatabase(context: Context): FavoritosDB {
+    fun provideDatabase(context: Context): AppDatabase {
         return Room.databaseBuilder(
             context.applicationContext,
-            FavoritosDB::class.java,
+            AppDatabase::class.java,
             "favoritos_db"
         ).build()
     }

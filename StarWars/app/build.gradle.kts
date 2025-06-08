@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp")
+    id ("kotlin-android")
+    id ("kotlin-parcelize")
 }
 
 android {
@@ -70,4 +72,5 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     implementation(libs.androidx.room.paging)
     ksp(libs.androidx.room.compiler)
+    implementation (libs.androidx.foundation)
 }

@@ -1,6 +1,8 @@
 package com.example.starwars.ui.modelo
 
+
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
 data class Personaje(
@@ -9,6 +11,6 @@ data class Personaje(
     @SerializedName("hair_color") val colorPelo: String,    // Color de pelo
     @SerializedName("birth_year") val nacimiento: String,   // Año de nacimiento
     @SerializedName("films") val peliculas: List<String> // Lista de películas en las que aparece
-)
+) : Serializable
 
 
