@@ -3,13 +3,13 @@ package com.example.starwars.ui.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.starwars.ui.modelo.Personaje
+import com.example.starwars.ui.data.modelo.Personaje
 import com.example.starwars.ui.network.api.RetrofitClient
 import com.example.starwars.ui.room.dao.FavoritosDao
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import com.example.starwars.ui.modelo.toFavorito // Importar la extensión para usarla
+import com.example.starwars.ui.data.modelo.toFavorito // Importar la extensión para usarla
 
 class PersonajeViewModel(private val favoritosDao: FavoritosDao) : ViewModel() {
     private val _uiState = MutableStateFlow(PersonajeUiState())

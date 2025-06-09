@@ -1,7 +1,7 @@
 package com.example.starwars.ui.network.api
 
 
-import com.example.starwars.ui.modelo.Personaje
+import com.example.starwars.ui.data.modelo.Personaje
 import retrofit2.http.GET
 
 interface PersonajesApi {

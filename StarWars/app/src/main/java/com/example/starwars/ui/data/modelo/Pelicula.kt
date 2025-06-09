@@ -1,4 +1,4 @@
-package com.example.starwars.ui.modelo
+package com.example.starwars.ui.data.modelo
 
 import com.google.gson.annotations.SerializedName
 

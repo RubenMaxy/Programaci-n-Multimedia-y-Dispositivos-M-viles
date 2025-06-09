@@ -1,6 +1,6 @@
 package com.example.starwars.ui.network.api
 
-import com.example.starwars.ui.modelo.Pelicula
+import com.example.starwars.ui.data.modelo.Pelicula
 import retrofit2.http.GET
 import retrofit2.http.Path
 

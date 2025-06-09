@@ -2,7 +2,7 @@ package com.example.starwars.ui.room.entidades
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.starwars.ui.modelo.Personaje
+import com.example.starwars.ui.data.modelo.Personaje
 
 @Entity(tableName = "favoritos")
 data class Favorito(
