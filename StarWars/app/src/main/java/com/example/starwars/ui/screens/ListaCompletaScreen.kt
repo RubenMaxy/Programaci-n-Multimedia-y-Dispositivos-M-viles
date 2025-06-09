@@ -21,8 +21,8 @@ fun ListaCompletaScreen(navController: NavController, viewModel: PersonajeViewMo
         items(uiState.value.personajes) { personaje ->
             PersonajeItem(personaje = personaje, viewModel = viewModel) {
                 viewModel.seleccionarPersonaje(personaje) // Guarda el personaje en el ViewModel
-                navController.currentBackStackEntry?.savedStateHandle?.set("personaje", personaje) // ✅ Guardamos el personaje antes de navegar
-                navController.navigate(Screens.Detalles.route)
+                navController.currentBackStackEntry?.savedStateHandle?.set("personaje", personaje) // Guardamos el personaje antes de navegar
+                navController.navigate(Screens.Detalles.route) // Navegamos a detalles con el personaje
             }
         }
     }

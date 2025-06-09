@@ -25,6 +25,8 @@ import com.example.starwars.ui.viewModel.PersonajeViewModel
 fun FavoritosScreen(navController: NavController, viewModel: PersonajeViewModel) {
     val favoritosState = viewModel.uiState.collectAsState() // Estado
 
+    viewModel.cargarFavoritos()
+
     if (favoritosState.value.favoritos.isEmpty()) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -48,8 +50,9 @@ fun FavoritosScreen(navController: NavController, viewModel: PersonajeViewModel)
                     personaje = personaje,
                     viewModel = viewModel // Pasamos el ViewModel de la pantalla
                 ) {
-                    viewModel.seleccionarPersonaje(personaje) // Guardamos en `ViewModel`
-                    navController.navigate(Screens.Detalles.route) // Navegamos a detalles
+                    viewModel.seleccionarPersonaje(personaje) // Guarda el personaje en el ViewModel
+                    navController.currentBackStackEntry?.savedStateHandle?.set("personaje", personaje) // Guardamos el personaje antes de navegar
+                    navController.navigate(Screens.Detalles.route) // Navegamos a detalles con el personaje
                 }
             }
         }
