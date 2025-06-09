@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
-import com.example.starwars.ui.dependencies.AppModule
 import com.example.starwars.ui.navigation.AppNavigation
 import com.example.starwars.ui.room.baseDatos.AppDatabase
 

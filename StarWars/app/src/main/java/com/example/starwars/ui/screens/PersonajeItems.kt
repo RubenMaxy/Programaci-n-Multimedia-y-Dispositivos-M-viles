@@ -1,5 +1,6 @@
 package com.example.starwars.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,23 +13,22 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.starwars.ui.modelo.Personaje
 import com.example.starwars.ui.viewModel.PersonajeViewModel
 
 @Composable
-fun PersonajeItem(personaje: Personaje, viewModel: PersonajeViewModel= viewModel(), onItemClick: () -> Unit) {
-    val favoritosState by viewModel.favoritos.collectAsState()
-
-    val esFavorito = favoritosState.any { it.nombre == personaje.nombre }
+fun PersonajeItem(personaje: Personaje, viewModel: PersonajeViewModel, onItemClick: () -> Unit) {
+    val favoritosState = viewModel.uiState.collectAsState()
+    val esFavorito = remember { derivedStateOf<Boolean> { favoritosState.value.favoritos.any() { it.nombre == personaje.nombre } } }
 
     Card(
-        modifier = Modifier.fillMaxWidth().padding(8.dp),
+        modifier = Modifier.fillMaxWidth().padding(8.dp).clickable { onItemClick() } // Permite la navegación al tocar el personaje
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = personaje.nombre, fontSize = 20.sp, fontWeight = FontWeight.Bold)
@@ -38,7 +38,7 @@ fun PersonajeItem(personaje: Personaje, viewModel: PersonajeViewModel= viewModel
 
             IconButton(onClick = { viewModel.alternarFavorito(personaje) }) {
                 Icon(
-                    imageVector = if (esFavorito) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                    imageVector = if (esFavorito.value) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
                     contentDescription = "Favorito"
                 )
             }

@@ -1,39 +1,33 @@
 package com.example.starwars.ui.screens
 
-import androidx.compose.foundation.layout.padding
+
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
 import com.example.starwars.ui.navigation.Screens
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.starwars.ui.room.dao.FavoritosDao
 import com.example.starwars.ui.viewModel.PersonajeViewModel
-import com.example.starwars.ui.viewModel.PersonajeViewModelFactory
 
 @Composable
-fun ListaCompletaScreen(navController: NavController, favoritosDao: FavoritosDao) {
-    val viewModelFactory = remember { PersonajeViewModelFactory(favoritosDao) }
-    val viewModel: PersonajeViewModel = viewModel(factory = viewModelFactory)
+fun ListaCompletaScreen(navController: NavController, viewModel: PersonajeViewModel) {
+    val uiState = viewModel.uiState.collectAsState()
 
-    LaunchedEffect(Unit) { viewModel.cargarPersonajes() }
-
-    val personajesState = viewModel.personajes.collectAsState()
-
-    LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = Modifier.padding(8.dp)) {
-        items(personajesState.value) { personaje ->
-            PersonajeItem(
-                personaje = personaje,
-                viewModel = viewModel // Pasamos el ViewModel para manejar favoritos
-            ) {
-                navController.currentBackStackEntry?.savedStateHandle?.set("personaje", personaje) // ✅ Guardamos el personaje
-                navController.navigate(Screens.Detalles.route) // Navegamos sin pasar el objeto
+    if (uiState.value.cargando) {
+        Text("Cargando personajes...")
+        viewModel.cargarPersonajes()
+    } else {
+        LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+            items(uiState.value.personajes) { personaje ->
+                PersonajeItem(
+                    personaje = personaje,
+                    viewModel = viewModel
+                ) {
+                    viewModel.seleccionarPersonaje(personaje)
+                    navController.navigate(Screens.Detalles.route)
+                }
             }
         }
     }

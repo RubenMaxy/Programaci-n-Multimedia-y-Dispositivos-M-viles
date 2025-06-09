@@ -5,7 +5,7 @@ import com.example.starwars.ui.room.Converters.Converters
 import com.example.starwars.ui.room.dao.FavoritosDao
 import com.example.starwars.ui.room.entidades.Favorito
 
-@Database(entities = [Favorito::class], version = 3) // Asegúrate de aumentar la versión al cambiar la estructura
+@Database(entities = [Favorito::class], version = 4) // Asegúrate de aumentar la versión al cambiar la estructura
 @TypeConverters(Converters::class) // Agregamos los convertidores para listas
 abstract class AppDatabase : RoomDatabase() {
     abstract fun favoritosDao(): FavoritosDao
