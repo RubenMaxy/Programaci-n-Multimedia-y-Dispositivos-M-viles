@@ -10,6 +10,7 @@ data class DiscoUiState(
     val publicacion: String = "",
     val valoracion: String = "",
     val cargando: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val discoAEliminar: Discos? = null
 )
 

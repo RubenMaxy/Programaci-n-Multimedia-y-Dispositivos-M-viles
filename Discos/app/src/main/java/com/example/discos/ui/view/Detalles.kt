@@ -28,7 +28,7 @@ fun Detalles(navController: NavController, viewModel: DiscoViewModel) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(disco?.titulo ?: "Detalles del Disco") },
+                title = { Text("Detalles del Disco") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver")

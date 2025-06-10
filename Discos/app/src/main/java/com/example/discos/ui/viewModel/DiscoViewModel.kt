@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import com.example.discos.ui.data.startingDiscos
+import java.lang.Thread.sleep
 
 
 class DiscoViewModel(private val discoDao: DiscosDao) : ViewModel() {
@@ -27,13 +28,6 @@ class DiscoViewModel(private val discoDao: DiscosDao) : ViewModel() {
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(error = "Error al obtener discos", cargando = false)
             }
-        }
-    }
-
-    fun eliminarDisco(disco: Discos) {
-        viewModelScope.launch {
-            discoDao.eliminarDisco(disco)
-            cargarDiscos() // Refresca la lista tras eliminar
         }
     }
 
@@ -86,4 +80,21 @@ class DiscoViewModel(private val discoDao: DiscosDao) : ViewModel() {
         }
     }
 
+    fun seleccionarDiscoParaEliminar(disco: Discos) {
+        _uiState.value = _uiState.value.copy(discoAEliminar = disco)
+    }
+
+    fun cancelarEliminacion() {
+        _uiState.value = _uiState.value.copy(discoAEliminar = null)
+    }
+
+    fun confirmarEliminacion() {
+        _uiState.value.discoAEliminar?.let { disco ->
+            viewModelScope.launch {
+                discoDao.eliminarDisco(disco)
+                cargarDiscos() // Refresca la lista tras eliminar
+            }
+            _uiState.value = _uiState.value.copy(discoAEliminar = null) // Limpia el estado
+        }
+    }
 }
