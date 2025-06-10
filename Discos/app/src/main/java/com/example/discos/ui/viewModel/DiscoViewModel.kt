@@ -1,13 +1,14 @@
 package com.example.discos.ui.viewModel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.discos.ui.data.Discos
 import com.example.discos.ui.room.dao.DiscosDao
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import com.example.discos.ui.data.startingDiscos
+
 
 class DiscoViewModel(private val discoDao: DiscosDao) : ViewModel() {
     private val _uiState = MutableStateFlow(DiscoUiState())
@@ -19,15 +20,13 @@ class DiscoViewModel(private val discoDao: DiscosDao) : ViewModel() {
 
     fun cargarDiscos() {
         viewModelScope.launch {
-            val discos = discoDao.obtenerTodosLosDiscos()
-            _uiState.value = _uiState.value.copy(discos = discos)
-        }
-    }
-
-    fun agregarDisco(disco: Discos) {
-        viewModelScope.launch {
-            discoDao.insertarDisco(disco)
-            cargarDiscos() // Refresca la lista tras agregar
+            _uiState.value = _uiState.value.copy(cargando = true) // Indicamos que estamos cargando
+            try {
+                val discos = discoDao.obtenerTodosLosDiscos()
+                _uiState.value = _uiState.value.copy(discos = discos, cargando = false)
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = "Error al obtener discos", cargando = false)
+            }
         }
     }
 
@@ -44,4 +43,47 @@ class DiscoViewModel(private val discoDao: DiscosDao) : ViewModel() {
             discos.map { it.valoracion }.average().toFloat()
         } else 0f
     }
+
+    fun actualizarTitulo(nuevoTitulo: String) {
+        _uiState.value = _uiState.value.copy(titulo = nuevoTitulo)
+    }
+
+    fun actualizarAutor(nuevoAutor: String) {
+        _uiState.value = _uiState.value.copy(autor = nuevoAutor)
+    }
+
+    fun actualizarNumCanciones(nuevoNum: String) {
+        _uiState.value = _uiState.value.copy(numCanciones = nuevoNum)
+    }
+
+    fun actualizarPublicacion(nuevoAnio: String) {
+        _uiState.value = _uiState.value.copy(publicacion = nuevoAnio)
+    }
+
+    fun actualizarValoracion(nuevaValoracion: String) {
+        _uiState.value = _uiState.value.copy(valoracion = nuevaValoracion)
+    }
+
+    fun agregarDisco() {
+        val nuevoDisco = Discos(
+            titulo = _uiState.value.titulo,
+            autor = _uiState.value.autor,
+            numCanciones = _uiState.value.numCanciones.toInt(),
+            publicacion = _uiState.value.publicacion.toInt(),
+            valoracion = _uiState.value.valoracion.toInt()
+        )
+        viewModelScope.launch {
+            discoDao.insertarDisco(nuevoDisco)
+            cargarDiscos() // Actualizamos la lista
+        }
+    }
+
+    fun cargarDiscosPorDefecto() {
+        viewModelScope.launch {
+            val discosPorDefecto = startingDiscos // Obtiene los discos de la data class
+            discosPorDefecto.forEach { discoDao.insertarDisco(it) } // Guarda en la BD
+            cargarDiscos() // Actualiza la lista en la UI
+        }
+    }
+
 }

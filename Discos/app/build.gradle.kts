@@ -4,6 +4,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp")
+    id ("kotlin-android")
+    id ("kotlin-parcelize")
 }
 
 android {
@@ -54,7 +57,6 @@ dependencies {
     implementation(libs.androidx.room.common.jvm)
     implementation(libs.androidx.navigation.runtime.android)
     implementation(libs.androidx.room.runtime.android)
-    implementation(libs.androidx.navigation.compose.jvmstubs)
     implementation(libs.androidx.legacy.support.v4)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -64,4 +66,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation (libs.lifecycle.viewmodel.compose)
+    implementation (libs.androidx.room.runtime)
+    implementation (libs.androidx.navigation.compose)
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation (libs.androidx.core.ktx) // Extensiones KTX para Core
+    implementation (libs.androidx.lifecycle.runtime.ktx) // KTX para ViewModel y LiveData
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.9.0") // KTX para navegación
+    implementation ("androidx.navigation:navigation-ui-ktx:2.7.4") // KTX para UI en navegación
 }

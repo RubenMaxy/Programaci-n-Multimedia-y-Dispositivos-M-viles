@@ -3,7 +3,13 @@ package com.example.discos.ui.viewModel
 import com.example.discos.ui.data.Discos
 
 data class DiscoUiState(
-    val discos: List<Discos> = emptyList(), // Lista de discos
-    val cargando: Boolean = false, // Indicador de carga
-    val error: String? = null // Manejo de errores
+    val discos: List<Discos> = emptyList(),
+    val titulo: String = "",
+    val autor: String = "",
+    val numCanciones: String = "",
+    val publicacion: String = "",
+    val valoracion: String = "",
+    val cargando: Boolean = false,
+    val error: String? = null
 )
+

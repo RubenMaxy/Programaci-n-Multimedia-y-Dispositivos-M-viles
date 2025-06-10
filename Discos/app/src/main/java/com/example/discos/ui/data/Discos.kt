@@ -2,6 +2,7 @@ package com.example.discos.ui.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity
 data class Discos(
@@ -11,4 +12,4 @@ data class Discos(
     val numCanciones: Int,
     val publicacion: Int,
     val valoracion: Int
-)
+) : Serializable

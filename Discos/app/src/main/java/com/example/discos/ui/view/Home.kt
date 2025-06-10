@@ -33,7 +33,7 @@ import com.example.discos.ui.viewModel.DiscoViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController, viewModel: DiscoViewModel) {
+fun Home(navController: NavController, viewModel: DiscoViewModel) {
     val uiState = viewModel.uiState.collectAsState()
 
     Scaffold(
@@ -57,7 +57,7 @@ fun HomeScreen(navController: NavController, viewModel: DiscoViewModel) {
             if (uiState.value.discos.isEmpty()) {
                 Icon(Icons.Filled.Warning, contentDescription = "Lista Vacía")
                 Text(text = "No hay discos añadidos todavía")
-                Button(onClick = { viewModel.cargarDiscos() }) {
+                Button(onClick = { viewModel.cargarDiscosPorDefecto() }) {
                     Text("Cargar discos por defecto")
                 }
             } else {
@@ -82,4 +82,3 @@ fun HomeScreen(navController: NavController, viewModel: DiscoViewModel) {
         }
     }
 }
-

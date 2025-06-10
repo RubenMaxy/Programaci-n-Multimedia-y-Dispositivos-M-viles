@@ -22,7 +22,7 @@ import com.example.discos.ui.viewModel.DiscoViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetallesScreen(navController: NavController, viewModel: DiscoViewModel) {
+fun Detalles(navController: NavController, viewModel: DiscoViewModel) {
     val disco = navController.previousBackStackEntry?.savedStateHandle?.get<Discos>("disco")
 
     Scaffold(

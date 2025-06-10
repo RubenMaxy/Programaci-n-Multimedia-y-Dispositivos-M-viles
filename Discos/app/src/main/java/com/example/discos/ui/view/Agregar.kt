@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -24,18 +25,14 @@ import com.example.discos.ui.viewModel.DiscoViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AgregarDiscoScreen(navController: NavController, viewModel: DiscoViewModel) {
-    var titulo = remember { mutableStateOf("") }
-    var autor = remember { mutableStateOf("") }
-    var numCanciones = remember { mutableStateOf("") }
-    var publicacion = remember { mutableStateOf("") }
-    var valoracion = remember { mutableStateOf("") }
+fun Agregar(navController: NavController, viewModel: DiscoViewModel) {
+    val uiState = viewModel.uiState.collectAsState()
 
-    val datosValidos = titulo.value.isNotBlank() &&
-            autor.value.isNotBlank() &&
-            numCanciones.value.toIntOrNull() in 1..99 &&
-            publicacion.value.toIntOrNull() in 1000..2030 &&
-            valoracion.value.toIntOrNull() in 1..5
+    val datosValidos = uiState.value.titulo.isNotBlank() &&
+            uiState.value.autor.isNotBlank() &&
+            uiState.value.numCanciones.toIntOrNull() in 1..99 &&
+            uiState.value.publicacion.toIntOrNull() in 1000..2030 &&
+            uiState.value.valoracion.toIntOrNull() in 1..5
 
     Scaffold(
         topBar = {
@@ -50,18 +47,39 @@ fun AgregarDiscoScreen(navController: NavController, viewModel: DiscoViewModel) 
         }
     ) { padding ->
         Column(modifier = Modifier.padding(padding).fillMaxSize(), verticalArrangement = Arrangement.Center) {
-            TextField(value = titulo, onValueChange = { titulo = it }, label = { Text("Título") })
-            TextField(value = autor, onValueChange = { autor = it }, label = { Text("Autor") })
-            TextField(value = numCanciones, onValueChange = { numCanciones = it }, label = { Text("Número de Canciones") })
-            TextField(value = publicacion, onValueChange = { publicacion = it }, label = { Text("Año de Publicación") })
-            TextField(value = valoracion, onValueChange = { valoracion = it }, label = { Text("Valoración (1-5)") })
+            TextField(
+                value = uiState.value.titulo,
+                onValueChange = { viewModel.actualizarTitulo(it) },
+                label = { Text("Título") }
+            )
+            TextField(
+                value = uiState.value.autor,
+                onValueChange = { viewModel.actualizarAutor(it) },
+                label = { Text("Autor") }
+            )
+            TextField(
+                value = uiState.value.numCanciones,
+                onValueChange = { viewModel.actualizarNumCanciones(it) },
+                label = { Text("Número de Canciones") }
+            )
+            TextField(
+                value = uiState.value.publicacion,
+                onValueChange = { viewModel.actualizarPublicacion(it) },
+                label = { Text("Año de Publicación") }
+            )
+            TextField(
+                value = uiState.value.valoracion,
+                onValueChange = { viewModel.actualizarValoracion(it) },
+                label = { Text("Valoración (1-5)") }
+            )
 
-            Button(onClick = {
-                viewModel.agregarDisco(
-                    Discos(titulo = titulo, autor = autor, numCanciones = numCanciones.toInt(), publicacion = publicacion.toInt(), valoracion = valoracion.toInt())
-                )
-                navController.popBackStack()
-            }, enabled = datosValidos) {
+            Button(
+                onClick = {
+                    viewModel.agregarDisco()
+                    navController.popBackStack()
+                },
+                enabled = datosValidos
+            ) {
                 Text("Añadir Disco")
             }
         }
